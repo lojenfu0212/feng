@@ -135,20 +135,29 @@
                 currentStatus = "符合規範 (R = N)";
                 currentLevelIdx = 1;
             } else {
-                const diff = Math.round((N - R) * 100) / 100; // N - R 的差距
-                currentStatus = "符合規範 (R < N)";
-                
-                if (diff > 0 && diff <= 0.5) { currentScore = "10.5 分"; currentLevelIdx = 2; }
-                else if (diff > 0.5 && diff <= 1.0) { currentScore = "11.0 分"; currentLevelIdx = 3; }
-                else if (diff > 1.0 && diff <= 1.5) { currentScore = "11.5 分"; currentLevelIdx = 4; }
-                else if (diff > 1.5 && diff <= 2.0) { currentScore = "12.0 分"; currentLevelIdx = 5; }
-                else if (diff > 2.0 && diff <= 2.5) { currentScore = "12.5 分"; currentLevelIdx = 6; }
-                else if (diff > 2.5 && diff <= 3.0) { currentScore = "13.0 分"; currentLevelIdx = 7; }
-                else if (diff > 3.0 && diff <= 3.5) { currentScore = "13.5 分"; currentLevelIdx = 8; }
-                else if (diff > 3.5 && diff <= 4.0) { currentScore = "14.0 分"; currentLevelIdx = 9; }
-                else if (diff > 4.0 && diff <= 4.5) { currentScore = "14.5 分"; currentLevelIdx = 10; }
-                else if (diff > 4.5) { currentScore = "15.0 分"; currentLevelIdx = 11; }
-            }
+                const diff = Math.round((N - R) * 100); // 放大100倍避免小數點二進位誤差
+
+if (R > N) {
+    currentScore = "不合格";
+    currentStatus = "資格不符 (R > N)";
+    currentLevelIdx = 0;
+} else if (Math.abs(R - N) < 0.001) {
+    currentScore = "10.0 分";
+    currentStatus = "符合規範 (R = N)";
+    currentLevelIdx = 1;
+} else {
+    currentStatus = "符合規範 (R < N)";
+    if (diff > 0 && diff <= 50) { currentScore = "10.5 分"; currentLevelIdx = 2; }
+    else if (diff > 50 && diff <= 100) { currentScore = "11.0 分"; currentLevelIdx = 3; }
+    else if (diff > 100 && diff <= 150) { currentScore = "11.5 分"; currentLevelIdx = 4; }
+    else if (diff > 150 && diff <= 200) { currentScore = "12.0 分"; currentLevelIdx = 5; }
+    else if (diff > 200 && diff <= 250) { currentScore = "12.5 分"; currentLevelIdx = 6; }
+    else if (diff > 250 && diff <= 300) { currentScore = "13.0 分"; currentLevelIdx = 7; }
+    else if (diff > 300 && diff <= 350) { currentScore = "13.5 分"; currentLevelIdx = 8; }
+    else if (diff > 350 && diff <= 400) { currentScore = "14.0 分"; currentLevelIdx = 9; }
+    else if (diff > 400 && diff <= 450) { currentScore = "14.5 分"; currentLevelIdx = 10; }
+    else if (diff > 450) { currentScore = "15.0 分"; currentLevelIdx = 11; }
+}
 
             // 4. 更新右上角狀態面板視覺效果
             const statusBox = document.getElementById('status_box');
