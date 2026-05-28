@@ -186,9 +186,12 @@
             tableData.forEach((row, idx) => {
                 const isCurrent = (idx === currentLevelIdx);
                 // 根據是否為當前落點給予不同的深藍色高亮樣式
-                const rowClass = isCurrent 
-                    ? "bg-blue-600 text-white font-bold shadow-sm transition-all" 
-                    : (idx === 0 ? "bg-red-50/50 text-red-700" : "hover:bg-slate-50 text-slate-700");
+                let rowClass = "hover:bg-slate-50 text-slate-700 transition-colors";
+if (isCurrent) {
+    rowClass = "bg-blue-600 text-white font-bold shadow-md relative z-10 scale-[1.01]";
+} else if (idx === 0) {
+    rowClass = "bg-red-50 text-red-700 font-medium";
+}
                 
                 const scoreClass = isCurrent ? "text-white text-base" : "font-semibold text-slate-900";
 
